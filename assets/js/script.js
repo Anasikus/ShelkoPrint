@@ -206,3 +206,38 @@ let currentPage = 'home';
 
             loadReviews();
         });
+        
+document.addEventListener('DOMContentLoaded', () => {
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.querySelector('.nav-links');
+    const navHeight = document.querySelector('header').offsetHeight;
+
+    // Гамбургер
+    if(navToggle && navLinks){
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+    }
+
+    // Плавный скролл с отступом 5px
+    const links = document.querySelectorAll('nav .nav-links a, .footer-links a');
+    links.forEach(link => {
+        link.addEventListener('click', function(e){
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const target = document.getElementById(targetId);
+            if(target){
+                const topPosition = target.offsetTop - navHeight - 1; // 5px отступ
+                window.scrollTo({
+                    top: topPosition,
+                    behavior: 'smooth'
+                });
+
+                // Закрываем мобильное меню после клика
+                if(navLinks.classList.contains('show')){
+                    navLinks.classList.remove('show');
+                }
+            }
+        });
+    });
+});

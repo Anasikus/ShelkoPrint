@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ШелкоПринт</title>
-    <link rel="icon" href="./assets/images/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="icon" href="../assets/images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styles.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -22,17 +22,16 @@
             <nav class="">
                 <div class="logo" onclick="showPage('home')">
                     <div class="logo-icon">
-                        <img src="./assets/images/logo.png" alt="ШелкоПринт">
+                        <img src="../assets/images/logo.png" alt="ШелкоПринт">
                     </div>
                     <span>ШелкоПринт</span>
                 </div>
-                <div class="nav-toggle" id="navToggle">&#9776;</div> <!-- гамбургер -->
                 <div class="nav-links">
-                    <a href="#home">О нас</a>
+                    <a href="#home" class="active">О нас</a>
                     <a href="#assortment">Ассортимент</a>
                     <a href="#services">Услуги</a>
-                    <a href="#contact">Контакты</a>
                     <a href="#reviews">Отзывы</a>
+                    <a href="#contact">Контакты</a>
                 </div>
             </nav>
         </div>
@@ -42,7 +41,7 @@
             <div class="content-wrapper">
                 <section class="hero glass">
                     <div class="hero-image">
-                        <img src="./assets/images/sd.jpg" alt="Modern Technology Interaction" />
+                        <img src="../assets/images/sd.jpg" alt="Modern Technology Interaction" />
                     </div>
                     <div class="hero-content">
                         <h1>Сфера деятельности</h1>
@@ -56,14 +55,14 @@
                         <p>Наше производство использует технологию трафаретной печати: на сетку (трафарет) наносят светочувствительный слой, затем проявляют изображение и при помощи ракеля продавливают краску через открытые участки. Мы применяем разные типы сеток и качественные краски, обеспечивая устойчивость изображений к выцветанию, стиркам и механическому износу.</p>
                     </div>
                     <div class="hero-image">
-                        <img src="./assets/images/op.jpg" alt="Modern Technology Interaction" />
+                        <img src="../assets/images/op.jpg" alt="Modern Technology Interaction" />
                     </div>
                 </section>
             </div>
         </div>
     </div>
 
-    <div id="assortment" class="page">
+    <div id="assortment">
         <div class="container">
             <div class="content-wrapper">
                 <section class="team-section">
@@ -104,28 +103,24 @@
                 <section class="team-section">
                     <h1>Услуги</h1>
                 </section>
-                <section class="hero glass">
-                    <div class="hero-image">
-                        <img src="./assets/images/templatemo-futuristic-girl.jpg" alt="Modern Technology Interaction" />
-                    </div>
-                    <div class="hero-content">
-                        <h1>Услуга 1</h1>
-                        <p>текст</p>
-                    </div>
+
+                <section class="services-grid" id="servicesGrid">
+                    <!-- Сюда JS вставит карточки услуг -->
                 </section>
 
-                <section class="hero glass">
-                    <div class="hero-content">
-                        <h1>Услуга 1</h1>
-                        <p>текст</p>
-                    </div>
-                    <div class="hero-image">
-                        <img src="./assets/images/templatemo-futuristic-girl.jpg" alt="Modern Technology Interaction" />
-                    </div>
+                <section class="glass1">
+                    <h2>Добавить услугу</h2>
+                    <form id="serviceForm">
+                    <input type="text" id="serviceTitle" placeholder="Название услуги" required />
+                    <textarea id="serviceDescription" placeholder="Описание услуги" required></textarea>
+                    <input type="file" id="serviceImage" accept="image/*" />
+                    <button type="submit">Добавить</button>
+                    </form>
                 </section>
             </div>
         </div>
     </div>
+
 
     <div id="contact" class="page">
         <div class="container">
@@ -158,7 +153,7 @@
                         <h2>Контактная информация</h2>
                         
                         <div class="contact-item">
-                            <div class="contact-item-icon"><img src="./assets/images/email.png" alt=""></div>
+                            <div class="contact-item-icon"><img src="../assets/images/email.png" alt=""></div>
                             <div class="contact-item-text">
                                 <h4>E-mail</h4>
                                 <p>p.ap@mail.ru</p>
@@ -166,7 +161,7 @@
                         </div>
 
                         <div class="contact-item">
-                            <div class="contact-item-icon"><img src="./assets/images/phone.png" alt=""></div>
+                            <div class="contact-item-icon"><img src="../assets/images/phone.png" alt=""></div>
                             <div class="contact-item-text">
                                 <h4>Телефон</h4>
                                 <p>8-920-105-11-44<br>8-920-116-00-45</p>
@@ -174,7 +169,7 @@
                         </div>
 
                         <div class="contact-item">
-                            <div class="contact-item-icon"><img src="./assets/images/workingTime.png" alt=""></div>
+                            <div class="contact-item-icon"><img src="../assets/images/workingTime.png" alt=""></div>
                             <div class="contact-item-text">
                                 <h4>Рабочие часы</h4>
                                 <p>Mon-Fri: 9AM-6PM<br>Sat-Sun: 10AM-4PM</p>
@@ -182,7 +177,7 @@
                         </div>
 
                         <div class="contact-item">
-                            <div class="contact-item-icon"><img src="./assets/images/address.png" alt=""></div>
+                            <div class="contact-item-icon"><img src="../assets/images/address.png" alt=""></div>
                             <div class="contact-item-text">
                                 <h4>Адрес</h4>
                                 <p>Улица Розы Люксембург, 55,<br> Тутаев, Ярославская область, 152300</p>
@@ -243,9 +238,9 @@
 
                     <!-- Список отзывов -->
                     <section class="reviews-list glass" id="reviewsList">
-                    <div class="no-reviews">
-                        Пока отзывов нет — будьте первым!
-                    </div>
+                        <div class="no-reviews">
+                            Пока отзывов нет — будьте первым!
+                        </div>
                     </section>
                 </div>
             </div>
@@ -260,8 +255,8 @@
                         <a href="#home">О нас</a>
                         <a href="#assortment">Ассортимент</a>
                         <a href="#services">Услуги</a>
-                        <a href="#contact">Контакты</a>
                         <a href="#reviews">Отзывы</a>
+                        <a href="#contact">Контакты</a>
                     </div>
                     <div class="copyright">
                         &copy; 2025 ШелкоПринт. Все права защищены.
@@ -270,6 +265,7 @@
             </footer>
         </div>
     </div>
-<script src="./assets/js/script.js"></script>
+<script src="../assets/js/script.js"></script>
+<script src="./admin.js"></script>
 </body>
 </html>
