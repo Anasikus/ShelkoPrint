@@ -4,10 +4,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    button[type="submit"] {
-        font-family: inherit;
-        font-size: 16px;
-    }
+}
+button[type="submit"] {
+    font-family: inherit;
+    font-size: 16px;
 }
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -147,7 +147,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 45px;
+    padding: 20px 45px;
 }
 /* Адаптивное меню для мобильных */
 .nav-toggle {
@@ -167,11 +167,15 @@ nav {
     cursor: pointer;
 }
 .logo-icon {
-    width: 64px;
-    height: 64px;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.logo img{
+    width: 120px;
+    height: 120px;
 }
 .logo-icon svg {
     width: 100%;
@@ -285,9 +289,12 @@ button[type="submit"] {
     margin-bottom: 40px;
 }
 .feature-card {
-    padding: 40px 30px;
     text-align: center;
     color: white;
+}
+.feature-card img{
+    width: 400px;
+    height: 400px;
 }
 .feature-icon {
     width: 60px;
@@ -825,6 +832,9 @@ textarea {
 
 /* Responsive design */
 @media (max-width: 1024px) {
+    body {
+        padding-top: 100px;
+    }
     .team-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -843,17 +853,22 @@ textarea {
         display: none;
         flex-direction: column;
         gap: 15px;
-        background: rgba(0, 0, 0, 0.7);
+        background: rgba(0, 0, 0, 0.70);
+        backdrop-filter: blur(10px);
         position: absolute;
         top: 100%;
         right: 0;
         width: 200px;
         padding: 20px;
-        border-radius: 10px;
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
     }
 
     .nav-links.show {
         display: flex;
+        width: 100%;
     }
 
     .nav-links a {
