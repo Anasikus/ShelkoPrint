@@ -1009,6 +1009,9 @@ textarea {
     .calculator-container {
         padding: 20px;
     }
+    .calculator-options{
+        justify-content: left;
+    }
 
     #priceTable th, #priceTable td {
         padding: 10px 6px;
