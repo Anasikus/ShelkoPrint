@@ -1,20 +1,17 @@
 <?php
 include 'db.php';
 
-$id = $_POST['id'];
-$title = $_POST['title'];
-$description = $_POST['description'];
+$id = intval($_POST['id']);
+$title = $_POST['title'] ?? '';
+$description = $_POST['description'] ?? '';
 
-$imageData = null;
 if (!empty($_FILES['image']['tmp_name'])) {
     $imageData = file_get_contents($_FILES['image']['tmp_name']);
-}
-
-if ($imageData !== null) {
-    $stmt = $conn->prepare("UPDATE services SET title=?, description=?, image=? WHERE id=?");
-    $stmt->bind_param("sssi", $title, $description, $imageData, $id);
+    $stmt = $conn->prepare("UPDATE services SET title = ?, description = ?, image = ? WHERE id = ?");
+    $stmt->bind_param("ssbi", $title, $description, $null, $id);
+    $stmt->send_long_data(2, $imageData);
 } else {
-    $stmt = $conn->prepare("UPDATE services SET title=?, description=? WHERE id=?");
+    $stmt = $conn->prepare("UPDATE services SET title = ?, description = ? WHERE id = ?");
     $stmt->bind_param("ssi", $title, $description, $id);
 }
 

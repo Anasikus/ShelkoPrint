@@ -45,39 +45,6 @@ let currentPage = 'home';
             parallax.style.transform = `translateY(${speed}px)`;
         });
 
-        // Add click ripple effect to glass elements
-        document.querySelectorAll('.glass').forEach(element => {
-            element.addEventListener('click', function(e) {
-                const ripple = document.createElement('div');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.cssText = `
-                    position: absolute;
-                    width: ${size}px;
-                    height: ${size}px;
-                    left: ${x}px;
-                    top: ${y}px;
-                    background: rgba(255, 255, 255, 0.3);
-                    border-radius: 50%;
-                    transform: scale(0);
-                    animation: ripple 0.6s linear;
-                    pointer-events: none;
-                    z-index: 1000;
-                `;
-                
-                this.style.position = 'relative';
-                this.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
-        });
-
-        // Add ripple animation keyframes
         const style = document.createElement('style');
         style.textContent = `
             @keyframes ripple {
@@ -89,11 +56,9 @@ let currentPage = 'home';
         `;
         document.head.appendChild(style);
 
-        // Form submission handling
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Create success message
             const successMsg = document.createElement('div');
             successMsg.style.cssText = `
                 position: fixed;
@@ -274,59 +239,104 @@ try {
 document.addEventListener("DOMContentLoaded", () => {
 
   const services = {
-    pvd: { name: "ПВД пакеты с печатью", base: 41.82 }, // базовая цена 100шт * 1+0
-    maika: { name: "Пакет «Майка»", base: 38.24 },       // базовая цена 100шт * 1+0
+    pvd: { name: "ПВД пакеты с печатью" },
+    maika: { name: "Пакет «Майка»" },
   };
 
   const availableColors = [
     "Белый", "Черный", "Красный", "Синий", "Зеленый", "Желтый", "Оранжевый", "Фиолетовый"
   ];
 
-  const sizeMultipliers = { "30x40": 1.0, "40x50": 1.15, "50x60": 1.3 };
-  const densityMultipliers = { "50": 1.0, "60": 1.1, "70": 1.25 };
+  // Категории размеров
+  const sizeGroupsPVD = {
+    "Маленький": { base: 19.18 },
+    "Средний": { base: 28.09 },
+    "Большой": { base: 28.09 }
+  };
 
-  const qtyDiscounts = { 100: 1.0, 200: 0.75, 300: 0.6, 500: 0.5, 1000: 0.38, 2000: 0.36, 5000: 0.34, 10000: 0.33 };
+  const sizeGroupsMaika = {
+    "Маленький": { base: 18.24 },
+    "Большой": { base: 23.24 }
+  };
+
+  const qtyValues = [100, 200, 300, 500, 1000, 2000];
+
+  const extraOptions = [
+    { id: "over30", label: "Запечатка более 30% ( +20% )", factor: 0.20 },
+    { id: "alignment", label: "Точное совмещение ( +10% )", factor: 0.10 },
+    { id: "pantone", label: "Печать по Pantone ( +10% )", factor: 0.10 },
+    { id: "gold", label: "Печать золотом/серебром ( +15% )", factor: 0.15 },
+    { id: "clientMaterial", label: "Печать на продукции клиента ( +20% )", factor: 0.20 },
+  ];
 
   let selectedService = "pvd";
-  let selectedColorsCount = 0;
   let selectedColorNames = [];
 
   const tbody = document.getElementById("tableBody");
   const serviceBtns = document.querySelectorAll(".service-btn");
   const sizeSelect = document.getElementById("sizeSelect");
-  const densitySelect = document.getElementById("densitySelect");
   const colorSelector = document.getElementById("colorSelector");
   const colorSelectContainer = document.getElementById("colorSelectContainer");
+  const optionsContainer = document.getElementById("extraOptions");
+
+  // Рендер чекбоксов опций
+  optionsContainer.innerHTML = "";
+  extraOptions.forEach(opt => {
+    const div = document.createElement("div");
+    div.innerHTML = `<label><input type="checkbox" id="${opt.id}"> ${opt.label}</label>`;
+    optionsContainer.appendChild(div);
+  });
 
   serviceBtns.forEach(btn => {
     btn.addEventListener("click", () => {
       serviceBtns.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       selectedService = btn.dataset.service;
+      updateSelectors();
       renderTable();
     });
   });
 
-  [sizeSelect, densitySelect].forEach(el => el.addEventListener("change", renderTable));
+  [...optionsContainer.querySelectorAll("input"), sizeSelect].forEach(el =>
+    el.addEventListener("change", renderTable)
+  );
+
+  function updateSelectors() {
+    sizeSelect.innerHTML = "";
+    const sizes = selectedService === "pvd" ? sizeGroupsPVD : sizeGroupsMaika;
+    Object.keys(sizes).forEach(size => {
+      sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
+    });
+  }
+
+  function calculatePrice(service, size, colors, qty) {
+    const baseGroup = service === "pvd" ? sizeGroupsPVD[size] : sizeGroupsMaika[size];
+    if (!baseGroup) return 0;
+
+    // Формулы для расчета
+    const baseCost = 2000 * colors + baseGroup.base * qty;
+
+    // Применяем доп. опции
+    let total = baseCost;
+    optionsContainer.querySelectorAll("input:checked").forEach(opt => {
+      const option = extraOptions.find(o => o.id === opt.id);
+      total *= 1 + option.factor;
+    });
+
+    return total / qty; // цена за штуку
+  }
 
   function renderTable() {
     tbody.innerHTML = "";
     colorSelector.style.display = "none";
 
-    const base = services[selectedService].base;
-    const sizeFactor = sizeMultipliers[sizeSelect.value];
-    const densityFactor = densityMultipliers[densitySelect.value];
-    const rows = [100, 200, 300, 500, 1000, 2000, 5000, 10000];
-
-    rows.forEach(qty => {
+    qtyValues.forEach(qty => {
       const tr = document.createElement("tr");
       tr.innerHTML = `<td>${qty}</td>`;
 
       for (let colors = 1; colors <= 4; colors++) {
-        const discount = qtyDiscounts[qty];
-        const colorFactor = 1 + (colors - 1) * 0.25; // надбавка за доп. цвета
-        const price = (base * colorFactor * discount * sizeFactor * densityFactor).toFixed(2);
-        tr.innerHTML += `<td data-qty="${qty}" data-colors="${colors}">${price}</td>`;
+        const price = calculatePrice(selectedService, sizeSelect.value, colors, qty);
+        tr.innerHTML += `<td data-qty="${qty}" data-colors="${colors}">${price.toFixed(2)} ₽</td>`;
       }
 
       tbody.appendChild(tr);
@@ -334,10 +344,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll("#priceTable td[data-qty]").forEach(cell => {
       cell.addEventListener("click", () => {
+        document.querySelectorAll("#priceTable td.selected").forEach(td => td.classList.remove("selected"));
+        cell.classList.add("selected");
+
         const qty = cell.dataset.qty;
         const colors = parseInt(cell.dataset.colors);
         const price = parseFloat(cell.textContent);
-        selectedColorsCount = colors;
         updateSummary(qty, colors, price);
         showColorSelector(colors);
       });
@@ -351,7 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 1; i <= count; i++) {
       const select = document.createElement("select");
       select.className = "colorSelect";
-      select.innerHTML = `<option disabled selected>Выберите цвет ${i}</option>` +
+      select.innerHTML = `<option disabled selected>Цвет ${i}</option>` +
         availableColors.map(c => `<option value="${c}">${c}</option>`).join("");
       colorSelectContainer.appendChild(select);
       select.addEventListener("change", updateSelectedColors);
@@ -365,16 +377,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateSummary(qty, colors, unitPrice) {
     const total = (unitPrice * qty).toFixed(2);
-    const sizeText = sizeSelect.options[sizeSelect.selectedIndex].text;
-    const densityText = densitySelect.options[densitySelect.selectedIndex].text;
+    const sizeText = sizeSelect.value;
 
     document.getElementById("sumType").textContent = services[selectedService].name;
-    document.getElementById("sumSize").textContent = `${sizeText}, ${densityText}`;
+    document.getElementById("sumSize").textContent = sizeText;
     document.getElementById("sumColors").textContent = `${colors} цвета`;
     document.getElementById("sumQty").textContent = `${qty} шт`;
-    document.getElementById("sumUnit").textContent = `${unitPrice} ₽`;
+    document.getElementById("sumUnit").textContent = `${unitPrice.toFixed(2)} ₽`;
     document.getElementById("sumTotal").textContent = `${total} ₽`;
   }
 
+  updateSelectors();
   renderTable();
 });

@@ -128,12 +128,6 @@ a {
     overflow: hidden;
 }
 
-.glass:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-5px);
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
-}
-
 .glass1 {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(20px);
@@ -835,6 +829,7 @@ textarea {
 }
 .review-card img {
   max-width: 100%;
+  max-height: 250px;
   border-radius: 5px;
   margin-top: 10px;
 }
@@ -941,6 +936,24 @@ textarea {
         width: 100%;
     }
 }
+@media (max-width: 992px) {
+  .selectors {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .service-panel {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .service-btn {
+    width: 90%;
+    text-align: center;
+  }
+}
 @media (max-width: 768px) {
     /* Adjust padding for mobile */
     .page {
@@ -993,6 +1006,41 @@ textarea {
     .reviews-container {
         flex-direction: column;
     }
+    .calculator-container {
+        padding: 20px;
+    }
+
+    #priceTable th, #priceTable td {
+        padding: 10px 6px;
+        font-size: 0.9rem;
+    }
+
+    .summary {
+        font-size: 0.9rem;
+    }
+
+    #colorSelectContainer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .colorSelect {
+        width: 100%;
+    }
+}
+@media (max-width: 480px) {
+  .service-btn {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+
+  .calculator-title {
+    font-size: 1.3rem;
+  }
+
+  .summary p {
+    font-size: 0.85rem;
+  }
 }
 .service-panel {
   display: flex;
@@ -1084,4 +1132,75 @@ textarea {
   margin-bottom: 10px;
   color: #fff;
   font-size: 1.2rem;
+}
+/* Стили выделенной ячейки */
+#priceTable td.selected {
+  background-color: rgba(254, 255, 255, 0.329);
+  border: 2px solid #ffffffb4;
+  transition: 0.2s ease;
+}
+/* === Общие визуальные правки === */
+.calculator-container {
+  border-radius: 25px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+}
+
+.summary, #extraOptions, #colorSelector {
+  border-radius: 20px;
+  padding: 20px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+}
+
+/* Таблица */
+.calculator-table {
+  overflow-x: auto;
+  border-radius: 15px;
+}
+
+#priceTable {
+  width: 100%;
+  border-collapse: collapse;
+  color: white;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+#priceTable th, #priceTable td {
+  text-align: center;
+  padding: 12px 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+#priceTable th {
+  background: rgba(255,255,255,0.15);
+}
+
+#priceTable tr:hover td {
+  background-color: rgba(255,255,255,0.2);
+}
+
+/* Стили выделенной ячейки */
+#priceTable td.selected {
+  background-color: rgba(255,255,255,0.35);
+  border: 2px solid #fff;
+  transition: 0.2s ease;
+}
+
+/* === Итоговый блок === */
+.summary {
+  margin-top: 25px;
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.summary h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  font-weight: 600;
 }

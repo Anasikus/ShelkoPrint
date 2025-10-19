@@ -6,6 +6,7 @@
     <title>ШелкоПринт</title>
     <link rel="icon" href="../assets/images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="./admin.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -98,29 +99,28 @@
     </div>
 
     <div id="services" class="page active">
-        <div class="container">
-            <div class="content-wrapper">
-                <section class="team-section">
-                    <h1>Услуги</h1>
-                </section>
+    <div class="container">
+        <div class="content-wrapper">
+        <section class="team-section">
+            <h1>Услуги</h1>
+        </section>
 
-                <section class="services-grid" id="servicesGrid">
-                    <!-- Сюда JS вставит карточки услуг -->
-                </section>
+        <section class="services-grid" id="servicesGrid">
+            <!-- Карточки услуг -->
+        </section>
 
-                <section class="glass1">
-                    <h2>Добавить услугу</h2>
-                    <form id="serviceForm">
-                    <input type="text" id="serviceTitle" placeholder="Название услуги" required />
-                    <textarea id="serviceDescription" placeholder="Описание услуги" required></textarea>
-                    <input type="file" id="serviceImage" accept="image/*" />
-                    <button type="submit">Добавить</button>
-                    </form>
-                </section>
-            </div>
+        <section class="glass1">
+            <h2>Добавить услугу</h2>
+            <form id="serviceForm" enctype="multipart/form-data">
+            <input type="text" id="serviceTitle" placeholder="Название услуги" required />
+            <textarea id="serviceDescription" placeholder="Описание услуги" required></textarea>
+            <input type="file" id="serviceImage" accept="image/*" />
+            <button type="submit">Добавить</button>
+            </form>
+        </section>
         </div>
     </div>
-
+    </div>
 
     <div id="contact" class="page">
         <div class="container">
