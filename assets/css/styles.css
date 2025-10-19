@@ -33,6 +33,10 @@ header {
     z-index: 1000;
 }
 
+a {
+    text-decoration: none;
+}
+
 .bg-shapes {
     position: fixed;
     top: 0;
@@ -255,6 +259,12 @@ nav {
     line-height: 1.2;
 }
 .hero p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+.hero-content ul{
     font-size: 1.2rem;
     color: rgba(255, 255, 255, 0.9);
     margin-bottom: 30px;
@@ -521,6 +531,7 @@ button[type="submit"] {
     margin-bottom: 30px;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
+
 .form-group {
     margin-bottom: 20px;
 }
@@ -590,6 +601,10 @@ button[type="submit"] {
 }
 .contact-item-text p {
     color: rgba(255, 255, 255, 0.8);
+}
+.contact-item-text a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
 }
 .contact-map {
     padding: 40px;

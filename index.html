@@ -109,15 +109,29 @@
                         <img src="./assets/images/templatemo-futuristic-girl.jpg" alt="Modern Technology Interaction" />
                     </div>
                     <div class="hero-content">
-                        <h1>Услуга 1</h1>
-                        <p>текст</p>
+                        <h1>ПВД пакеты с печатью</h1>
+                        <p>
+                            Мы — производитель со своим оборудованием, который работает по всей России. У нас вы можете:
+                            Купить пвд пакеты с логотипом от 100 штук — быстро и выгодно
+                            Получить пвд пакеты с логотипом с доставкой по всей стране
+                            Сделать печать логотипа на пвд пакетах в 1–4 цвета
+                            Получить брендированные пакеты пвд с логотипом по вашему дизайну
+                            Оформить пвд пакеты с логотипом оптом — от 1000 до 2000 штук
+                            <ul class="hero-content">
+                                <li>Купить пвд пакеты с логотипом от 100 штук — быстро и выгодно</li>
+                                <li>Получить пвд пакеты с логотипом с доставкой по всей стране</li>
+                                <li>Сделать печать логотипа на пвд пакетах в 1–4 цвета</li>
+                                <li>Получить брендированные пакеты пвд с логотипом по вашему дизайну</li>
+                                <li>Оформить пвд пакеты с логотипом оптом — от 1000 до 2000 штук</li>
+                            </ul>
+                        </p>
                     </div>
                 </section>
 
                 <section class="hero glass">
                     <div class="hero-content">
-                        <h1>Услуга 1</h1>
-                        <p>текст</p>
+                        <h1>Печать логотипов на пакетах майка</h1>
+                        <p>Наша компания использует при производстве пакетов современные технологии и качественное сырьё, что обеспечивает продукции прочность и долговечность. Новое оборудование и стойкие к истиранию красители делают логотип и рекламные материалы на пакете яркими и заметными. Оригинальный дизайн и удобная для переноски тяжестей конструкция позволяют покупателям использовать майку не один раз, разнося повсюду информацию о вашем бизнесе.</p>
                     </div>
                     <div class="hero-image">
                         <img src="./assets/images/templatemo-futuristic-girl.jpg" alt="Modern Technology Interaction" />
@@ -131,16 +145,17 @@
         <div class="container">
             <div class="content-wrapper">
                 <section class="contact-grid">
+                    <!-- Форма обратной связи -->
                     <div class="contact-form glass">
                         <h2>Обратная связь</h2>
-                        <form>
+                        <form id="contactForm" action="./api/send_mail.php" method="POST">
                             <div class="form-group">
                                 <label for="name">Имя</label>
                                 <input type="text" id="name" name="name" placeholder="Введите ваше полное имя" required>
                             </div>
                             <div class="form-group">
                                 <label for="email">Электронная почта</label>
-                                <input type="text" id="email" name="email" placeholder="Введите вашу электронную почту" required>
+                                <input type="email" id="email" name="email" placeholder="Введите вашу электронную почту" required>
                             </div>
                             <div class="form-group">
                                 <label for="subject">Тема</label>
@@ -151,52 +166,62 @@
                                 <textarea id="message" name="message" placeholder="Расскажите нам о своем впечатлении..." required></textarea>
                             </div>
                             <button type="submit" class="cta-button">Отправить сообщение</button>
+                            <p id="formStatus" style="margin-top: 10px;"></p>
                         </form>
                     </div>
 
+                    <!-- Контактная информация -->
                     <div class="contact-info glass">
-                        <h2>Контактная информация</h2>
-                        
-                        <div class="contact-item">
-                            <div class="contact-item-icon"><img src="./assets/images/email.png" alt=""></div>
-                            <div class="contact-item-text">
-                                <h4>E-mail</h4>
-                                <p>p.ap@mail.ru</p>
-                            </div>
-                        </div>
+                    <h2>Контактная информация</h2>
 
-                        <div class="contact-item">
-                            <div class="contact-item-icon"><img src="./assets/images/phone.png" alt=""></div>
-                            <div class="contact-item-text">
-                                <h4>Телефон</h4>
-                                <p>8-920-105-11-44<br>8-920-116-00-45</p>
-                            </div>
+                    <div class="contact-item">
+                        <div class="contact-item-icon"><img src="./assets/images/email.png" alt=""></div>
+                        <div class="contact-item-text">
+                            <h4>E-mail</h4>
+                            <p>
+                                <a href="mailto:p.ap@mail.ru" class="contact-link">p.ap@mail.ru</a>
+                            </p>
                         </div>
+                    </div>
 
-                        <div class="contact-item">
-                            <div class="contact-item-icon"><img src="./assets/images/workingTime.png" alt=""></div>
-                            <div class="contact-item-text">
-                                <h4>Рабочие часы</h4>
-                                <p>Mon-Fri: 9AM-6PM<br>Sat-Sun: 10AM-4PM</p>
-                            </div>
+                    <div class="contact-item">
+                        <div class="contact-item-icon"><img src="./assets/images/phone.png" alt=""></div>
+                        <div class="contact-item-text">
+                            <h4>Телефон</h4>
+                            <p>
+                                <a href="tel:+79201051144" class="contact-link">8-920-105-11-44</a><br>
+                                <a href="tel:+79201160045" class="contact-link">8-920-116-00-45</a>
+                            </p>
                         </div>
+                    </div>
 
-                        <div class="contact-item">
-                            <div class="contact-item-icon"><img src="./assets/images/address.png" alt=""></div>
-                            <div class="contact-item-text">
-                                <h4>Адрес</h4>
-                                <p>Улица Розы Люксембург, 55,<br> Тутаев, Ярославская область, 152300</p>
-                            </div>
+                    <div class="contact-item">
+                        <div class="contact-item-icon"><img src="./assets/images/workingTime.png" alt=""></div>
+                        <div class="contact-item-text">
+                            <h4>Рабочие часы</h4>
+                            <p>Пн-Пт: 9:00-18:00<br>Сб-Вс: 10:00-16:00</p>
                         </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-item-icon"><img src="./assets/images/address.png" alt=""></div>
+                        <div class="contact-item-text">
+                            <h4>Адрес</h4>
+                            <p>Улица Розы Люксембург, 55,<br> Тутаев, Ярославская область, 152300</p>
+                        </div>
+                    </div>
                     </div>
                 </section>
 
+                <!-- Карта -->
                 <section class="contact-map-section">
                     <div class="contact-map glass">
-                        <h2>Мы находимся тут</h2>
-                        <div class="map-container">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2122.5661021701344!2d39.51790807728845!3d57.85960582778569!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNTfCsDUxJzM0LjYiTiAzOcKwMzEnMTMuNyJF!5e0!3m2!1sru!2sru!4v1759770890883!5m2!1sru!2sru" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        </div>
+                    <h2>Мы находимся тут</h2>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2122.5661021701344!2d39.51790807728845!3d57.85960582778569!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNTfCsDUxJzM0LjYiTiAzOcKwMzEnMTMuNyJF!5e0!3m2!1sru!2sru!4v1759770890883!5m2!1sru!2sru" 
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
                     </div>
                 </section>
             </div>

@@ -108,7 +108,7 @@ let currentPage = 'home';
                 z-index: 10000;
                 animation: fadeIn 0.3s ease;
             `;
-            successMsg.textContent = 'Message sent successfully! We\'ll get back to you soon.';
+            successMsg.textContent = 'Сообщение успешно отправлено!';
             
             document.body.appendChild(successMsg);
             
@@ -240,4 +240,33 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+});
+
+document.getElementById('contactForm').addEventListener('submit', async function (e) {
+e.preventDefault();
+
+const form = e.target;
+const formData = new FormData(form);
+const status = document.getElementById('formStatus');
+status.textContent = "Отправка...";
+
+try {
+    const response = await fetch(form.action, {
+    method: 'POST',
+    body: formData
+    });
+
+    const result = await response.text();
+
+    if (response.ok) {
+    status.style.color = "green";
+    status.textContent = "Сообщение успешно отправлено!";
+    form.reset();
+    } else {
+    throw new Error(result || "Ошибка при отправке");
+    }
+} catch (error) {
+    status.style.color = "red";
+    status.textContent = "Ошибка: " + error.message;
+}
 });
