@@ -270,3 +270,111 @@ try {
     status.textContent = "Ошибка: " + error.message;
 }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const services = {
+    pvd: { name: "ПВД пакеты с печатью", base: 41.82 }, // базовая цена 100шт * 1+0
+    maika: { name: "Пакет «Майка»", base: 38.24 },       // базовая цена 100шт * 1+0
+  };
+
+  const availableColors = [
+    "Белый", "Черный", "Красный", "Синий", "Зеленый", "Желтый", "Оранжевый", "Фиолетовый"
+  ];
+
+  const sizeMultipliers = { "30x40": 1.0, "40x50": 1.15, "50x60": 1.3 };
+  const densityMultipliers = { "50": 1.0, "60": 1.1, "70": 1.25 };
+
+  const qtyDiscounts = { 100: 1.0, 200: 0.75, 300: 0.6, 500: 0.5, 1000: 0.38, 2000: 0.36, 5000: 0.34, 10000: 0.33 };
+
+  let selectedService = "pvd";
+  let selectedColorsCount = 0;
+  let selectedColorNames = [];
+
+  const tbody = document.getElementById("tableBody");
+  const serviceBtns = document.querySelectorAll(".service-btn");
+  const sizeSelect = document.getElementById("sizeSelect");
+  const densitySelect = document.getElementById("densitySelect");
+  const colorSelector = document.getElementById("colorSelector");
+  const colorSelectContainer = document.getElementById("colorSelectContainer");
+
+  serviceBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      serviceBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      selectedService = btn.dataset.service;
+      renderTable();
+    });
+  });
+
+  [sizeSelect, densitySelect].forEach(el => el.addEventListener("change", renderTable));
+
+  function renderTable() {
+    tbody.innerHTML = "";
+    colorSelector.style.display = "none";
+
+    const base = services[selectedService].base;
+    const sizeFactor = sizeMultipliers[sizeSelect.value];
+    const densityFactor = densityMultipliers[densitySelect.value];
+    const rows = [100, 200, 300, 500, 1000, 2000, 5000, 10000];
+
+    rows.forEach(qty => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${qty}</td>`;
+
+      for (let colors = 1; colors <= 4; colors++) {
+        const discount = qtyDiscounts[qty];
+        const colorFactor = 1 + (colors - 1) * 0.25; // надбавка за доп. цвета
+        const price = (base * colorFactor * discount * sizeFactor * densityFactor).toFixed(2);
+        tr.innerHTML += `<td data-qty="${qty}" data-colors="${colors}">${price}</td>`;
+      }
+
+      tbody.appendChild(tr);
+    });
+
+    document.querySelectorAll("#priceTable td[data-qty]").forEach(cell => {
+      cell.addEventListener("click", () => {
+        const qty = cell.dataset.qty;
+        const colors = parseInt(cell.dataset.colors);
+        const price = parseFloat(cell.textContent);
+        selectedColorsCount = colors;
+        updateSummary(qty, colors, price);
+        showColorSelector(colors);
+      });
+    });
+  }
+
+  function showColorSelector(count) {
+    colorSelector.style.display = "block";
+    colorSelectContainer.innerHTML = "";
+
+    for (let i = 1; i <= count; i++) {
+      const select = document.createElement("select");
+      select.className = "colorSelect";
+      select.innerHTML = `<option disabled selected>Выберите цвет ${i}</option>` +
+        availableColors.map(c => `<option value="${c}">${c}</option>`).join("");
+      colorSelectContainer.appendChild(select);
+      select.addEventListener("change", updateSelectedColors);
+    }
+  }
+
+  function updateSelectedColors() {
+    selectedColorNames = [...document.querySelectorAll(".colorSelect")].map(s => s.value).filter(Boolean);
+    document.getElementById("sumSelectedColors").textContent = selectedColorNames.join(", ") || "—";
+  }
+
+  function updateSummary(qty, colors, unitPrice) {
+    const total = (unitPrice * qty).toFixed(2);
+    const sizeText = sizeSelect.options[sizeSelect.selectedIndex].text;
+    const densityText = densitySelect.options[densitySelect.selectedIndex].text;
+
+    document.getElementById("sumType").textContent = services[selectedService].name;
+    document.getElementById("sumSize").textContent = `${sizeText}, ${densityText}`;
+    document.getElementById("sumColors").textContent = `${colors} цвета`;
+    document.getElementById("sumQty").textContent = `${qty} шт`;
+    document.getElementById("sumUnit").textContent = `${unitPrice} ₽`;
+    document.getElementById("sumTotal").textContent = `${total} ₽`;
+  }
+
+  renderTable();
+});

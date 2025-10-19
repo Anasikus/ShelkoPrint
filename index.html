@@ -31,8 +31,9 @@
                     <a href="#home">О нас</a>
                     <a href="#assortment">Ассортимент</a>
                     <a href="#services">Услуги</a>
+                    <a href="#calculator">Калькулятор</a> 
                     <a href="#contact">Контакты</a>
-                    <a href="#reviews">Отзывы</a>
+                    <a href="#reviews">Отзывы</a>                    
                 </div>
             </nav>
         </div>
@@ -106,17 +107,12 @@
                 </section>
                 <section class="hero glass">
                     <div class="hero-image">
-                        <img src="./assets/images/templatemo-futuristic-girl.jpg" alt="Modern Technology Interaction" />
+                        <img src="./assets/images/пвд.jpg" alt="ПВД пакеты с печатью" />
                     </div>
                     <div class="hero-content">
                         <h1>ПВД пакеты с печатью</h1>
                         <p>
                             Мы — производитель со своим оборудованием, который работает по всей России. У нас вы можете:
-                            Купить пвд пакеты с логотипом от 100 штук — быстро и выгодно
-                            Получить пвд пакеты с логотипом с доставкой по всей стране
-                            Сделать печать логотипа на пвд пакетах в 1–4 цвета
-                            Получить брендированные пакеты пвд с логотипом по вашему дизайну
-                            Оформить пвд пакеты с логотипом оптом — от 1000 до 2000 штук
                             <ul class="hero-content">
                                 <li>Купить пвд пакеты с логотипом от 100 штук — быстро и выгодно</li>
                                 <li>Получить пвд пакеты с логотипом с доставкой по всей стране</li>
@@ -134,11 +130,88 @@
                         <p>Наша компания использует при производстве пакетов современные технологии и качественное сырьё, что обеспечивает продукции прочность и долговечность. Новое оборудование и стойкие к истиранию красители делают логотип и рекламные материалы на пакете яркими и заметными. Оригинальный дизайн и удобная для переноски тяжестей конструкция позволяют покупателям использовать майку не один раз, разнося повсюду информацию о вашем бизнесе.</p>
                     </div>
                     <div class="hero-image">
-                        <img src="./assets/images/templatemo-futuristic-girl.jpg" alt="Modern Technology Interaction" />
+                        <img src="./assets/images/майки.jpg" alt="Печать логотипов на пакетах майка" />
                     </div>
                 </section>
             </div>
         </div>
+    </div>
+
+    <div id="calculator" class="page">
+    <div class="container">
+        <div class="content-wrapper">
+
+        <section class="team-section">
+            <h1 class="calculator-title">Рассчитайте стоимость печати</h1>
+        </section>
+
+        <section class="glass calculator-container">
+
+            <!-- Тип пакета -->
+            <div class="service-panel">
+            <button class="service-btn active" data-service="pvd">ПВД пакет</button>
+            <button class="service-btn" data-service="maika">Пакет «Майка»</button>
+            </div>
+
+            <!-- Размер и плотность -->
+            <div class="selectors">
+            <label>
+                Размер:
+                <select id="sizeSelect">
+                <option value="30x40">30×40 см</option>
+                <option value="40x50">40×50 см</option>
+                <option value="50x60">50×60 см</option>
+                </select>
+            </label>
+
+            <label>
+                Плотность:
+                <select id="densitySelect">
+                <option value="50">50 мк</option>
+                <option value="60" selected>60 мк</option>
+                <option value="70">70 мк</option>
+                </select>
+            </label>
+            </div>
+
+            <!-- Таблица -->
+            <div class="calculator-table glass1">
+            <table id="priceTable">
+                <thead>
+                <tr>
+                    <th>Тираж / Цвета</th>
+                    <th>1 цвет</th>
+                    <th>2 цвета</th>
+                    <th>3 цвета</th>
+                    <th>4 цвета</th>
+                </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+            </div>
+
+            <!-- Выбор конкретных цветов -->
+            <div id="colorSelector" class="glass1" style="display:none;">
+            <h3>Выберите цвета печати:</h3>
+            <div id="colorSelectContainer"></div>
+            </div>
+
+            <!-- Итог -->
+            <div class="summary glass1">
+            <h3>Итоговый расчёт</h3>
+            <p>Тип: <span id="sumType">ПВД пакеты с печатью</span></p>
+            <p>Размер: <span id="sumSize">30×40 см, 60 мк</span></p>
+            <p>Печать: <span id="sumColors">—</span></p>
+            <p>Выбранные цвета: <span id="sumSelectedColors">—</span></p>
+            <p>Цена за единицу: <span id="sumUnit">0 ₽</span></p>
+            <p>Тираж: <span id="sumQty">0 шт</span></p>
+            <p>Итого: <span id="sumTotal">0 ₽</span></p>
+            <p>Срок изготовления: <span id="sumDays">7–10 дней</span></p>
+            </div>
+
+        </section>
+        </div>
+    </div>
     </div>
 
     <div id="contact" class="page">
