@@ -118,7 +118,7 @@ let currentPage = 'home';
 
             // Загрузка отзывов из БД
             function loadReviews() {
-                fetch("api/get_reviews.php")
+                fetch("api/reviews/get_reviews.php")
                     .then(res => res.json())
                     .then(reviews => {
                         reviewsList.innerHTML = "";
@@ -151,7 +151,7 @@ let currentPage = 'home';
                 const imageFile = document.getElementById("reviewImage").files[0];
                 if (imageFile) formData.append("image", imageFile);
 
-                fetch("api/add_review.php", {
+                fetch("api/reviews/add_review.php", {
                     method: "POST",
                     body: formData
                 })

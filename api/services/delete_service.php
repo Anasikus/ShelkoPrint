@@ -1,7 +1,10 @@
 <?php
-include 'db.php';
+include '../db.php';
 
-$id = $_POST['id'];
+$id = intval($_POST['id']);
+if ($id <= 0) {
+    exit("error: invalid id");
+}
 
 $stmt = $conn->prepare("DELETE FROM services WHERE id=?");
 $stmt->bind_param("i", $id);

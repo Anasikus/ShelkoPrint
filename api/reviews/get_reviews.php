@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include '../db.php';
 
 $sql = "SELECT id, name, review, rating, image, DATE_FORMAT(date, '%d.%m.%Y %H:%i') AS date FROM reviews ORDER BY id DESC";
 $result = $conn->query($sql);

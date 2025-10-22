@@ -7,7 +7,7 @@
     <link rel="icon" href="../assets/images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="./admin.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
     <div class="bg-shapes">
@@ -69,6 +69,19 @@
                 <section class="team-section">
                     <h1>Ассортимент</h1>
                 </section>
+                <section class="add-assortment">
+                <h2>Добавить товар</h2>
+                <form id="assortmentForm" enctype="multipart/form-data">
+                    <input type="text" id="itemTitle" placeholder="Название" required>
+                    <textarea id="itemDesc" placeholder="Описание" required></textarea>
+                    <input type="number" id="itemPrice" placeholder="Цена" step="0.01" required>
+                    <input type="file" id="itemImage" accept="image/*">
+                    <button type="submit">Добавить</button>
+                </form>
+                </section>
+
+                <section class="features" id="assortmentGrid"></section>
+
                 <section class="features">
                     <div class="feature-card glass">
                         <img src="" alt="Фото 1">
@@ -112,11 +125,12 @@
         <section class="glass1">
             <h2>Добавить услугу</h2>
             <form id="serviceForm" enctype="multipart/form-data">
-            <input type="text" id="serviceTitle" placeholder="Название услуги" required />
-            <textarea id="serviceDescription" placeholder="Описание услуги" required></textarea>
-            <input type="file" id="serviceImage" accept="image/*" />
+            <input type="text" id="serviceTitle" name="title" placeholder="Название услуги" required />
+            <textarea id="serviceDescription" name="description" placeholder="Описание услуги" required></textarea>
+            <input type="file" id="serviceImage" name="image" accept="image/*" />
             <button type="submit">Добавить</button>
             </form>
+
         </section>
         </div>
     </div>

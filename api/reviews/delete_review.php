@@ -2,7 +2,7 @@
 header('Content-Type: text/plain');
 
 // Подключаем БД через mysqli
-include 'db.php'; // здесь создаётся $conn
+include '../db.php'; // здесь создаётся $conn
 
 // Получаем ID отзыва из POST-запроса
 $id = $_POST['id'] ?? null;
