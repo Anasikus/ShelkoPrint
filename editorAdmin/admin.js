@@ -120,148 +120,97 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // === 2. Блок услуг ===
-document.addEventListener("DOMContentLoaded", () => {
   const servicesGrid = document.getElementById("servicesGrid");
   const serviceForm = document.getElementById("serviceForm");
 
-  // === Загрузка услуг ===
-  function loadServices() {
-    fetch("../api/services/get_services.php")
-      .then(res => res.json())
-      .then(services => {
-        servicesGrid.innerHTML = "";
+  if (servicesGrid && serviceForm) {
+    function loadServices() {
+      fetch("../api/services/get_services.php")
+        .then(res => res.json())
+        .then(services => {
+          servicesGrid.innerHTML = "";
+          services.forEach(s => {
+            const card = document.createElement("div");
+            card.classList.add("hero", "glass");
+            card.innerHTML = `
+              <div class="hero-content">
+                <h1 contenteditable="true" class="service-title">${s.title}</h1>
+                <p contenteditable="true" class="service-desc">${s.description}</p>
+                ${s.image ? `<img src="${s.image}" style="max-width:200px;border-radius:10px;margin-top:10px;">` : ""}
+                <div style="margin-top:10px;">
+                  <input type="file" class="update-image" accept="image/*" />
+                  <button class="update-btn" data-id="${s.id}">Сохранить</button>
+                  <button class="delete-btn" data-id="${s.id}">Удалить</button>
+                </div>
+              </div>`;
+            servicesGrid.appendChild(card);
+          });
 
-        services.forEach(s => {
-          const card = document.createElement("div");
-          card.classList.add("hero", "glass");
+          servicesGrid.querySelectorAll(".update-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+              const card = btn.closest(".hero-content");
+              const id = btn.dataset.id;
+              const title = card.querySelector(".service-title").textContent.trim();
+              const desc = card.querySelector(".service-desc").textContent.trim();
+              const imageFile = card.querySelector(".update-image").files[0];
+              if (!title || !desc) {
+                alert("Поля не могут быть пустыми!");
+                return;
+              }
+              const formData = new FormData();
+              formData.append("id", id);
+              formData.append("title", title);
+              formData.append("description", desc);
+              if (imageFile) formData.append("image", imageFile);
 
-          card.innerHTML = `
-            <div class="hero-content">
-              <h1 class="service-title" contenteditable="false">${s.title}</h1>
-              <p class="service-desc" contenteditable="false">${s.description}</p>
-              ${s.image ? `<img src="${s.image}" style="max-width:200px;border-radius:10px;margin-top:10px;">` : ""}
-              <div style="margin-top:10px;">
-                <input type="file" class="update-image" accept="image/*" style="display:none;">
-                <button class="edit-btn" data-id="${s.id}">Редактировать</button>
-                <button class="update-btn" data-id="${s.id}" style="display:none;">Сохранить</button>
-                <button class="cancel-btn" style="display:none;">Отмена</button>
-                <button class="delete-btn" data-id="${s.id}">Удалить</button>
-              </div>
-            </div>
-          `;
-          servicesGrid.appendChild(card);
-        });
+              fetch("../api/services/update_service.php", { method: "POST", body: formData })
+                .then(res => res.text())
+                .then(() => loadServices());
+            });
+          });
 
-        // === Удаление ===
-        document.querySelectorAll(".delete-btn").forEach(btn => {
-          btn.addEventListener("click", () => {
-            if (!confirm("Удалить эту услугу?")) return;
-            const id = btn.dataset.id;
-            fetch("../api/services/delete_service.php", {
-              method: "POST",
-              headers: { "Content-Type": "application/x-www-form-urlencoded" },
-              body: `id=${id}`
-            }).then(() => loadServices());
+          servicesGrid.querySelectorAll(".delete-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+              if (!confirm("Удалить услугу?")) return;
+              const id = btn.dataset.id;
+              fetch("../api/services/delete_service.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `id=${id}`
+              }).then(() => loadServices());
+            });
           });
         });
-
-        // === Редактирование ===
-        document.querySelectorAll(".edit-btn").forEach(btn => {
-          btn.addEventListener("click", () => {
-            const card = btn.closest(".hero-content");
-            const title = card.querySelector(".service-title");
-            const desc = card.querySelector(".service-desc");
-            const fileInput = card.querySelector(".update-image");
-            const saveBtn = card.querySelector(".update-btn");
-            const cancelBtn = card.querySelector(".cancel-btn");
-
-            // Включаем режим редактирования
-            title.contentEditable = "true";
-            desc.contentEditable = "true";
-            title.classList.add("editable");
-            desc.classList.add("editable");
-            fileInput.style.display = "inline-block";
-            saveBtn.style.display = "inline-block";
-            cancelBtn.style.display = "inline-block";
-            btn.style.display = "none";
-          });
-        });
-
-        // === Отмена редактирования ===
-        document.querySelectorAll(".cancel-btn").forEach(btn => {
-          btn.addEventListener("click", () => {
-            loadServices(); // просто перезагружаем список
-          });
-        });
-
-        // === Сохранение изменений ===
-        document.querySelectorAll(".update-btn").forEach(btn => {
-          btn.addEventListener("click", () => {
-            const id = btn.dataset.id;
-            const card = btn.closest(".hero-content");
-            const title = card.querySelector(".service-title").textContent.trim();
-            const desc = card.querySelector(".service-desc").textContent.trim();
-            const imageFile = card.querySelector(".update-image").files[0];
-
-            const formData = new FormData();
-            formData.append("id", id);
-            formData.append("title", title);
-            formData.append("description", desc);
-            if (imageFile) formData.append("image", imageFile);
-
-            fetch("../api/services/update_service.php", {
-              method: "POST",
-              body: formData
-            })
-              .then(res => res.text())
-              .then(result => {
-                if (result.trim() === "success") {
-                  loadServices();
-                } else {
-                  alert("Ошибка: " + result);
-                }
-              });
-          });
-        });
-      });
-  }
-
-  // === Добавление новой услуги ===
-  serviceForm.addEventListener("submit", e => {
-    e.preventDefault();
-
-    const title = document.getElementById("serviceTitle").value.trim();
-    const description = document.getElementById("serviceDescription").value.trim();
-    const imageFile = document.getElementById("serviceImage").files[0];
-
-    if (!title || !description) {
-      alert("Заполните все поля!");
-      return;
     }
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", description);
-    if (imageFile) formData.append("image", imageFile);
+    serviceForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const title = document.getElementById("serviceTitle").value.trim();
+      const desc = document.getElementById("serviceDescription").value.trim();
+      const imageFile = document.getElementById("serviceImage").files[0];
 
-    fetch("../api/services/add_service.php", {
-      method: "POST",
-      body: formData
-    })
-      .then(res => res.text())
-      .then(result => {
-        if (result.trim() === "success") {
-          serviceForm.reset();
-          loadServices();
-        } else {
-          alert("Ошибка: " + result);
-        }
-      });
-  });
+      if (!title || !desc) {
+        alert("Заполните все поля!");
+        return;
+      }
 
-  loadServices();
-});
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", desc);
+      if (imageFile) formData.append("image", imageFile);
 
+      fetch("../api/services/add_service.php", { method: "POST", body: formData })
+        .then(res => res.text())
+        .then(r => {
+          if (r.trim() === "success") {
+            serviceForm.reset();
+            loadServices();
+          } else alert("Ошибка: " + r);
+        });
+    });
+
+    loadServices();
+  }
 
   // === 3. Блок ассортимента ===
   const assortmentForm = document.getElementById("assortmentForm");
